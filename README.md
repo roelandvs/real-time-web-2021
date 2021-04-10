@@ -5,6 +5,7 @@ This app allows you to chat with other people. You enter your name and you get p
 
 ## Graph
 
+
 ## Feautures (I want to add)
 - Using nicknames
 - Translating messages
