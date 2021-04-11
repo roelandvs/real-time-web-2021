@@ -1,6 +1,8 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 3000
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+
+const { functionOrder } = require('./js/data/functionOrder');
 
 app
     .use(express.static(`${__dirname}/public`))
@@ -9,9 +11,12 @@ app
     // .set('views', join(`${__dirname}/views`))
 
 app.get('/', (req, res) => {
-    res.render('home')
-})
+    // functionOrder()
+        // .then(response => {
+            res.render('home')
+        // });
+});
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}`);
 });
