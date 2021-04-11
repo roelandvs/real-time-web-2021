@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const { functionOrder } = require('./js/data/functionOrder');
+const { functionOrder } = require('./data/functionOrder');
 
 app
     .use(express.static(`${__dirname}/public`))
@@ -11,10 +11,10 @@ app
     // .set('views', join(`${__dirname}/views`))
 
 app.get('/', (req, res) => {
-    // functionOrder()
-        // .then(response => {
+    functionOrder()
+        .then(response => {
             res.render('home')
-        // });
+        });
 });
 
 app.listen(port, () => {
