@@ -8,14 +8,14 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "author": "Merlijn Bergevoet, Roeland van Stee, Max Hauser, Jimmy de Kroon, Marvin Sernee",
+  "author": "Roeland van Stee",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "mongodb": "^3.6.5",
+    "node-fetch": "^2.6.1",
     "socket.io": "^4.0.1",
     "socket.io-client": "^4.0.1"
   },
