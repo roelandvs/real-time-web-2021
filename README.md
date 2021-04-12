@@ -6,6 +6,8 @@ Ik wil een realtime poker spel maken. Je kunt dus in een room komen met (willeke
 
 Ook zal er rekening gehouden worden met de small en big blind, en dat de beurt roteert. De winnaar zal aan het einde de pot winnen en dit geld wordt aan zijn rekening toegevoegd. Dit zal dus ook in een database moeten worden opgeslagen.
 
+<br/>
+
 # Schetsen
 ## Schets 1
 ![poker1](https://user-images.githubusercontent.com/59770136/114394895-05d54b00-9b9c-11eb-9baa-c912babde2b9.jpeg)
@@ -25,6 +27,8 @@ Ook zal er rekening gehouden worden met de small en big blind, en dat de beurt r
 - Overzichtelijk (+)
 - Minst lastig te developen (+)
 - Als je kaarten wil laten zien aan het einde van de ronde kan dit makkelijk (+)
+
+<br/>
 
 # API's
 Om mijn poker spel te realisteren maak ik gebruik van twee verschillende API's. Zonder deze API's zou het nog steeds mogelijk zijn om deze applicatie te maken, maar deze API's maken het aanzienlijk makkelijker om de app te realiseren.
@@ -107,6 +111,8 @@ En dit geeft de API als response terug:
 ```
 Vervolgens kun je het `deck_id` gebruiken in een nieuw request om handelingen uit te voeren op dat specifieke deck.
 
+<br/>
+
 # MoSCoW
 ## Must
 - Naam tonen
@@ -129,10 +135,12 @@ Vervolgens kun je het `deck_id` gebruiken in een nieuw request om handelingen ui
 - Echt geld kunnen storten
 - Dingen
 
-# Graph
-Work in progress...
+<br/>
 
-# Stappen
+# Graph
+![Screenshot 2021-04-12 at 16 08 28](https://user-images.githubusercontent.com/59770136/114408615-e2190180-9ba9-11eb-8891-db87c52e9fe2.png)
+
+<br/>
 
 ## Installation guide
 Create a directory using your terminal:
