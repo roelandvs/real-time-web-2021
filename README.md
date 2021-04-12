@@ -109,16 +109,25 @@ Vervolgens kun je het `deck_id` gebruiken in een nieuw request om handelingen ui
 
 # MoSCoW
 ## Must
-- dingen
+- Naam tonen
+- Poker regels toepassen
+- Keuze maken tussen (fold, check en raise)
+- Rooms maken
 
 ## Should
-- dingen
+- Login
+- Geld bijhouden op account
+- Geld 'bijkopen' als je niks meer hebt
 
 ## Could
-- dingen
+- Je vrienden uitnodigen voor een room
+- Animaties toepassen op kaarten
+- Eigen avatar maken, die vervolgens aan tafel zit
+- Op mobiel werken
 
 ## Want to have, but not this time
-- dingen
+- Echt geld kunnen storten
+- Dingen
 
 # Graph
 Work in progress...
