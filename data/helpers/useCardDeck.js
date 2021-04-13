@@ -1,8 +1,8 @@
 const { fetchCardsAPI } = require('./fetchAPI');
 const { turnToJSON } = require('../utils/turnToJSON');
 
-function useCardDeck(purpose, deckID, cards) {
-    return fetchCardsAPI(purpose, deckID, cards)
+function useCardDeck(purpose, number, deckID) {
+    return fetchCardsAPI(purpose, number, deckID)
         .then(turnToJSON)
 };
 
