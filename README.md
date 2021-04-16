@@ -1,4 +1,5 @@
 # Real-Time Poker App
+[Link naar site](https://realtime-poker.herokuapp.com/)
 Ik wil een realtime poker spel maken. Je kunt dus in een room komen met (willekeurige?) tegenstanders. Deze rooms zullen een beperkt aantal(8) personen binnen laten zodat het niet te druk zal worden. Verder moet er natuurlijk voldaan worden aan alle regels van poker. Het moet in de basis dus mogelijk zijn om te:
 - Folden
 - Callen
