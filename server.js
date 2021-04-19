@@ -18,13 +18,13 @@ app.get('/', (req, res) => {
     res.render('rooms')
 });
 
-app.get('/dingen', (req, res) => {
-    res.render('home')
+app.get('/:roomId', (req, res) => {
+    res.render('staging')
 });
 
 app.post('/', (req, res) => {
     if (req.body.create) {
-        createRoom(req.body.name, res);        
+        createRoom(req.body.name, res);
     } else {
         checkRoom(req.body.name, res, req.body.roomID);
     }

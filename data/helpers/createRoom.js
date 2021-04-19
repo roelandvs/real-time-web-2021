@@ -3,14 +3,11 @@ const db = firebase.database();
 
 function createRoom(name, res, roomId) {
     if (roomId) {
-        console.log('joinRoom')
         db.ref('rooms').child(roomId).child('players').push({
             username: name,
             money: 0
         })
     } else {
-        console.log('createRoom')
-
         const createRoomId = (Math.random()).toString().substring(2);
         db.ref('rooms').child(createRoomId).child('players').push({
             username: name,
@@ -18,7 +15,7 @@ function createRoom(name, res, roomId) {
         });
     };
 
-    
+    res.redirect(`/${roomId}`)
 };
 
 module.exports = { createRoom };
