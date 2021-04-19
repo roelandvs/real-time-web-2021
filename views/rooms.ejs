@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Poker Appie</title>
+</head>
+
+<body>
+    <h1>Poker</h1>
+    <section>
+        <form action="/" method="POST">
+            <label for="name">Naam</label>
+            <input type="text" name="name" id="name" required>
+            
+            <button type="submit" value="create" name="create">Create Room</button>
+            <p>or</p>
+            <!-- <label for="roomID">Room ID</label> -->
+            <input type="text" placeholder="Room ID" name="roomID" id="roomID">
+            <button type="submit" id="roomID" name="join">Join Room</button>
+        </form>
+    </section>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

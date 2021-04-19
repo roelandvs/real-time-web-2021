@@ -4,23 +4,35 @@ const port = process.env.PORT || 3000;
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-const { functionOrder } = require('./data/functionOrder');
+// const { functionOrder } = require('./data/functionOrder');
 const { useCardDeck } = require('./data/helpers/useCardDeck');
+const { createRoom } = require('./data/helpers/createRoom');
+const { checkRoom } = require('./data/helpers/checkRoom');
 
 app
     .use(express.static(`${__dirname}/public`))
     .set('view engine', 'ejs')
+    .use(express.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
-    functionOrder()
-        .then(response => {
-            res.render('home')
-        });
+    res.render('rooms')
+});
+
+app.get('/dingen', (req, res) => {
+    res.render('home')
+});
+
+app.post('/', (req, res) => {
+    if (req.body.create) {
+        createRoom(req.body.name, res);        
+    } else {
+        checkRoom(req.body.name, res, req.body.roomID);
+    }
 });
 
 let players = [];
 
-io.on('connection', async (socket) => {
+io.on('connection', (socket) => {
     console.log('user connected');
     
     socket.join('room1');
