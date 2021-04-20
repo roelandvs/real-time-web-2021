@@ -14,7 +14,11 @@
     </ul>
     
     <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/staging.js"></script>
+    <script>
+        const playerName = <%= name %>
+        const roomId = <%= room %>
+    </script>
+    <script src="/js/staging.js"></script>
 </body>
 
 </html>

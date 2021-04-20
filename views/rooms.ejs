@@ -15,16 +15,16 @@
             <label for="name">Naam</label>
             <input type="text" name="name" id="name" required>
             
-            <button type="submit" value="create" name="create">Create Room</button>
+            <button type="submit" class="submit-button" value="create" name="create">Create Room</button>
             <p>or</p>
             <!-- <label for="roomID">Room ID</label> -->
             <input type="text" placeholder="Room ID" name="roomID" id="roomID">
-            <button type="submit" id="roomID" name="join">Join Room</button>
+            <button type="submit" class="submit-button" id="roomID" name="join">Join Room</button>
         </form>
     </section>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/script.js"></script>
+    <script src="./js/rooms.js"></script>
 </body>
 
 </html>
