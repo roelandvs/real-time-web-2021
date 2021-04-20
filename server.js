@@ -32,32 +32,25 @@ app.post('/', (req, res) => {
     }
 });
 
-let players = [];
-
 io.on('connection', (socket) => {
     console.log('user connected');
     
-    players.push(socket.id);
-    
     socket.on('start game', async (room) => {
-        // const players = io.sockets.adapter.rooms.get(room);
-        getUsers(room);
+        const players = await getUsers(room, 'socketId');
+        const deck = await useCardDeck('create');
+        const river = await useCardDeck('draw', '5', deck.deck_id);
 
-        // const deck = await useCardDeck('create');
-        // const river = await useCardDeck('draw', '5', deck.deck_id);
-
-        // players.forEach(async (user) => {
-        //     const draw = await useCardDeck('draw', '2', deck.deck_id);
-        //     io.to(`${user}`).emit('serve cards', draw, river);
-        // }); 
+        players.forEach(async (user) => {
+            const draw = await useCardDeck('draw', '2', deck.deck_id);
+            io.to(`${user}`).emit('serve cards', draw, river);
+        }); 
     });
 
-    socket.on('join room', (name, room) => {
-        socket.join(room);
+    socket.on('join room', async (name, room) => {
         addData(room, name, 'socketId', socket.id);
-        socket.name = name;
-        socket.room = room;
-        io.to(room).emit('add player', name);
+        const names = await getUsers(room, 'username');
+        socket.join(room);
+        io.to(room).emit('add player', names);
     })
 
     socket.on('disconnect', () => {
