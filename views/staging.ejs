@@ -10,13 +10,29 @@
 
 <body>
     <h1>Players</h1>
+    <p><%= room %></p>
     <ul id="players">
     </ul>
+
+    <button id="button">Start</button>
+
+    <div>
+        <img class="user-card" src="" alt="">
+        <img class="user-card" src="" alt="">
+    </div>
+
+    <div>
+        <img class="river-card" src="" alt="">
+        <img class="river-card" src="" alt="">
+        <img class="river-card" src="" alt="">
+        <img class="river-card" src="" alt="">
+        <img class="river-card" src="" alt="">
+    </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const playerName = <%= name %>
-        const roomId = <%= room %>
+        const roomId = '<%= room %>'
+        const name = '<%= name %>'
     </script>
     <script src="/js/staging.js"></script>
 </body>

@@ -7,8 +7,7 @@ function checkRoom(name, res, roomId) {
     db.ref('rooms').child(roomId).get().then( snapshot => {
         if (snapshot.exists()){
             createRoom(name, res, roomId);
-        } 
-        else {
+        } else {
         };
     });
 };
