@@ -9,6 +9,7 @@ const { useCardDeck } = require('./data/helpers/useCardDeck');
 const { createRoom } = require('./data/helpers/createRoom');
 const { checkRoom } = require('./data/helpers/checkRoom');
 const { getUsers } = require('./data/helpers/getUsers');
+const { addData } = require('./data/helpers/addData');
 
 app
     .use(express.static(`${__dirname}/public`))
@@ -53,6 +54,7 @@ io.on('connection', (socket) => {
 
     socket.on('join room', (name, room) => {
         socket.join(room);
+        addData(room, name, 'socketId', socket.id);
         socket.name = name;
         socket.room = room;
         io.to(room).emit('add player', name);
