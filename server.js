@@ -5,8 +5,8 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 // const { functionOrder } = require('./data/functionOrder');
+const { createOrJoinRoom } = require('./data/helpers/createOrJoinRoom');
 const { useCardDeck } = require('./data/helpers/useCardDeck');
-const { createRoom } = require('./data/helpers/createRoom');
 const { checkRoom } = require('./data/helpers/checkRoom');
 const { getUsers } = require('./data/helpers/getUsers');
 const { addData } = require('./data/helpers/addData');
@@ -26,7 +26,7 @@ app.get('/:roomId/:name', (req, res) => {
 
 app.post('/', (req, res) => {
     if (req.body.create) {
-        createRoom(req.body.name, res);
+        createOrJoinRoom(req.body.name, res);
     } else {
         checkRoom(req.body.name, res, req.body.roomID);
     }
@@ -39,11 +39,19 @@ io.on('connection', (socket) => {
         const players = await getUsers(socket.room, 'socketId');
         const deck = await useCardDeck('create');
         const river = await useCardDeck('draw', '5', deck.deck_id);
+        const riverArray = [];
 
         players.forEach(async (player) => {
             const draw = await useCardDeck('draw', '2', deck.deck_id);
             io.to(`${player}`).emit('serve cards', draw, river);
         }); 
+
+        river.cards.forEach(card => {
+            riverArray.push(card.code)
+        });
+
+        addData(socket.room, 'none', 'deckId', deck.deck_id);
+        addData(socket.room, 'none', 'riverCards', riverArray);
     });
 
     socket.on('join room', async (name, room) => {

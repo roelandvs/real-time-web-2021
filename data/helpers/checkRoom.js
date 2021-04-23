@@ -1,12 +1,12 @@
 const { firebase } = require('./firebase');
-const { createRoom } = require('./createRoom');
+const { createOrJoinRoom } = require('./createOrJoinRoom');
 const db = firebase.database();
 
 function checkRoom(name, res, roomId) {
     //checks if room ID exists
     db.ref('rooms').child(roomId).get().then( snapshot => {
         if (snapshot.exists()){
-            createRoom(name, res, roomId);
+            createOrJoinRoom(name, res, roomId);
         } else {
         };
     });
