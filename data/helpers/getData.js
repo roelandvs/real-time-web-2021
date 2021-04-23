@@ -1,8 +1,10 @@
 const { firebase } = require('./firebase');
 const db = firebase.database();
 
-function getUsers(roomId, property) {
-    return db.ref('rooms').child(roomId).child('players').get().then( snapshot => {
+function getData(roomId, property) {
+    const userRef = db.ref('rooms').child(roomId);
+
+    return userRef.child('players').get().then( snapshot => {
         if (snapshot.exists()){
             playerValues = [];
             snapshot.forEach(player => {
@@ -14,4 +16,4 @@ function getUsers(roomId, property) {
     });
 };
 
-module.exports = { getUsers };
+module.exports = { getData };

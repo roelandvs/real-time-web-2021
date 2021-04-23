@@ -8,7 +8,7 @@ const io = require('socket.io')(http);
 const { createOrJoinRoom } = require('./data/helpers/createOrJoinRoom');
 const { useCardDeck } = require('./data/helpers/useCardDeck');
 const { checkRoom } = require('./data/helpers/checkRoom');
-const { getUsers } = require('./data/helpers/getUsers');
+const { getData } = require('./data/helpers/getData');
 const { addData } = require('./data/helpers/addData');
 
 app
@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     // console.log('user connected');
     
     socket.on('start game', async () => {
-        const players = await getUsers(socket.room, 'socketId');
+        const players = await getData(socket.room, 'socketId');
         const deck = await useCardDeck('create');
         const river = await useCardDeck('draw', '5', deck.deck_id);
         const riverArray = [];
@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
 
     socket.on('join room', async (name, room) => {
         addData(room, name, 'socketId', socket.id);
-        const names = await getUsers(room, 'username');
+        const names = await getData(room, 'username');
         socket.name = name;
         socket.room = room;
         socket.join(room);

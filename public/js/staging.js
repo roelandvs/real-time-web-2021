@@ -31,6 +31,10 @@ socket.on('serve cards', (cards, river) => {
     console.log('river:', river)
 });
 
+// function end() {
+//     socket.emit('get winner')
+// }
+
 function start() {
     socket.emit('start game', roomId);
 };
