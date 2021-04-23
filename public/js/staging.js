@@ -1,5 +1,6 @@
 const socket = io();
-const button = document.querySelector('#button');
+const startButton = document.querySelector('#start-button');
+const endButton = document.querySelector('#end-button');
 
 socket.emit('join room', name, roomId);
 
@@ -31,13 +32,14 @@ socket.on('serve cards', (cards, river) => {
     console.log('river:', river)
 });
 
-// function end() {
-//     socket.emit('get winner')
-// }
+function end() {
+    socket.emit('get winner');
+}
 
 function start() {
     socket.emit('start game', roomId);
 };
 
-button.addEventListener('click', start);
+startButton.addEventListener('click', start);
+endButton.addEventListener('click', end);
 

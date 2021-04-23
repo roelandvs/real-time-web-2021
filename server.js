@@ -56,6 +56,9 @@ io.on('connection', (socket) => {
         // addData(socket.room, 'none', 'riverCards', riverArray);
     });
 
+    socket.on('end game', async () => {
+    });
+
     socket.on('join room', async (name, room) => {
         addData(room, name, 'socketId', socket.id);
         const names = await getData(room, 'username');
