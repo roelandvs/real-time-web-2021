@@ -1,19 +1,32 @@
 const { firebase } = require('./firebase');
 const db = firebase.database();
 
-function getData(roomId, property) {
+function getData(roomId, property, room) {
     const userRef = db.ref('rooms').child(roomId);
 
-    return userRef.child('players').get().then( snapshot => {
-        if (snapshot.exists()){
-            playerValues = [];
-            snapshot.forEach(player => {
-                playerValues.push(player.val()[property]);
+    //I made this function so that you can get data from users, or from the room
+    //But I currently only get user data, but it's still usefull code
+    if (room) {
+        return userRef.get()
+            .then(snapshot => {
+                return snapshot.val()[property];
             })
-            return playerValues;
-        } else {
-        };
-    });
+            .catch(err => {
+                console.log(err)
+            });
+    } else {
+        return userRef.child('players').get()
+            .then(snapshot => {
+                    playerValues = [];
+                    snapshot.forEach(player => {
+                        playerValues.push(player.val()[property]);
+                    })
+                    return playerValues;
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
 };
 
 module.exports = { getData };

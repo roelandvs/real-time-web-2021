@@ -50,8 +50,10 @@ io.on('connection', (socket) => {
             riverArray.push(card.code)
         });
 
-        addData(socket.room, 'none', 'deckId', deck.deck_id);
-        addData(socket.room, 'none', 'riverCards', riverArray);
+        socket.deck = deck.deck_id;
+        socket.river = riverArray;
+        // addData(socket.room, 'none', 'deckId', deck.deck_id);
+        // addData(socket.room, 'none', 'riverCards', riverArray);
     });
 
     socket.on('join room', async (name, room) => {
