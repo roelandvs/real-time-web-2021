@@ -28,8 +28,8 @@ socket.on('serve cards', (cards, river) => {
     });
 
     socket.emit('cards to database', cards.cards[0].code, cards.cards[1].code);
-    console.log('cards:', cards)
-    console.log('river:', river)
+    // console.log('cards:', cards)
+    // console.log('river:', river)
 });
 
 function end() {
