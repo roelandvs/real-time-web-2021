@@ -32,6 +32,10 @@ socket.on('serve cards', (cards, river) => {
     // console.log('river:', river)
 });
 
+socket.on('return winner', (winner, hand) => {
+    console.log(`${winner} won the game with a ${hand}!`)
+});
+
 function end() {
     socket.emit('get winner');
 }

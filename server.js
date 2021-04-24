@@ -37,12 +37,12 @@ io.on('connection', (socket) => {
     // console.log('user connected');
     
     socket.on('start game', async () => {
-        const players = await getData(socket.room, 'socketId');
+        const playerIds = await getData(socket.room, 'socketId');
         const deck = await useCardDeck('create');
         const river = await useCardDeck('draw', '5', deck.deck_id);
         const riverArray = [];
 
-        players.forEach(async (player) => {
+        playerIds.forEach(async (player) => {
             const draw = await useCardDeck('draw', '2', deck.deck_id);
             io.to(`${player}`).emit('serve cards', draw, river);
         });
@@ -69,18 +69,10 @@ io.on('connection', (socket) => {
     socket.on('cards to database', async (cardOne, cardTwo) => {
         addData(socket.room, socket.name, 'cards', [cardOne, cardTwo]);
         socket.river = await getData(socket.room, 'riverCards', 'room');
+        socket.playerIds = await getData(socket.room, 'socketId');
     })
 
     socket.on('get winner', () => {
-        // const playerCards = await getData(socket.room, 'cards');
-        // const urlRiverString = socket.river.toString();
-        // const urlCardString = playerCards.reduce((acc, cur) => {
-        //     const cardString = cur.toString();
-        //     const formattedCard = `&pc[]=${cardString}`;
-        //     return acc.concat(formattedCard);
-        // }, '');
-        // const winner = await getWinner(urlRiverString, urlCardString);
-        // const allUsers = await getData(socket.room, 'niks', 'user');
         getData(socket.room, 'cards')
             .then(playerCards => {
                 return playerCards.reduce((acc, cur) => {
@@ -102,6 +94,18 @@ io.on('connection', (socket) => {
                 const winner = users.find((user) => {
                     userCardString = user.cards.toString();
                     return userCardString === winnerObject.winners[0].cards;
+                });
+                return [winner, winnerObject];
+            })
+            .then(winnerArray => {
+                const winningValue = winnerArray[1].winners[0].result;
+
+                socket.playerIds.forEach(playerId => {
+                    if (winnerArray[0].socketId === playerId) {
+                        io.to(`${playerId}`).emit('return winner', 'you', winningValue);
+                    } else {
+                        io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
+                    }
                 })
             })
     })
