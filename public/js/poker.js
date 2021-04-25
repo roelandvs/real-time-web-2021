@@ -3,7 +3,8 @@ const startButton = document.querySelector('#start-button');
 const endButton = document.querySelector('#end-button');
 const foldButton = document.createElement('button');
 const checkButton = document.createElement('button');
-const statusList = document.querySelector('#status-list')
+const statusList = document.querySelector('#status-list');
+const optionContainer = document.querySelector('#options');
 
 socket.emit('join room', name, roomId);
 
@@ -35,20 +36,17 @@ socket.on('serve cards', (cards, river) => {
     });
 
     socket.emit('cards to database', cards.cards[0].code, cards.cards[1].code);
-    // console.log('cards:', cards)
-    // console.log('river:', river)
     startButton.parentElement.removeChild(startButton);
 });
 
 socket.on('active turn', () => {
-    const optionContainer = document.querySelector('#options')
-    
     foldButton.setAttribute('type', 'button');
     checkButton.setAttribute('type', 'button');
     foldButton.innerText = 'Fold';
     checkButton.innerText = 'Check';
     optionContainer.appendChild(foldButton);
     optionContainer.appendChild(checkButton);
+    foldButton.addEventListener('click', fold);
 });
 
 socket.on('return winner', (winner, hand) => {
@@ -75,10 +73,10 @@ function check() {
 
 function fold() {
     socket.emit('fold');
+    optionContainer.innerHTML = '';
 };
 
 startButton.addEventListener('click', start);
 checkButton.addEventListener('click', check);
-foldButton.addEventListener('click', fold);
 // endButton.addEventListener('click', end);
 

@@ -86,8 +86,8 @@ io.on('connection', (socket) => {
         const nextPlayer = players.find((player) => {
             return player.hasHadTurn === false;
         });
-
         io.to(nextPlayer.socketId).emit('active turn');
+        addData(socket.room, nextPlayer.username, 'hasHadTurn', true);
     })
 
     socket.on('get winner', () => {
