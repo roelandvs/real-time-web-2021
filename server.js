@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
     socket.on('start game', async () => {
         const playerIds = await getData(socket.room, 'socketId');
         const deck = await useCardDeck('create');
-        const river = await useCardDeck('draw', '5', deck.deck_id);
+        const river = await useCardDeck('draw', '3', deck.deck_id);
         const riverArray = [];
 
         playerIds.forEach((player, i) => {

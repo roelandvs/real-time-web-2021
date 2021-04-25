@@ -24,12 +24,17 @@ socket.on('serve cards', (cards, river) => {
     });
 
     riverCardsImg.forEach((card, i) => {
-        card.setAttribute('src', `${river.cards[i].image}`)
+        if (river.cards[i]) {
+            card.setAttribute('src', `${river.cards[i].image}`)
+        } else {
+            card.setAttribute('src', 'https://lh3.googleusercontent.com/proxy/t8xwIPdIq_8cduE0NuFc9Lo38C2yB72_Jz6ASGM9M_mc04agyRSdV3UqevIVQIv9UH7q9vuPCKJi08NL0IIZjdSgk0GIxhY')
+        }
     });
 
     socket.emit('cards to database', cards.cards[0].code, cards.cards[1].code);
     // console.log('cards:', cards)
     // console.log('river:', river)
+    startButton.parentElement.removeChild(startButton);
 });
 
 socket.on('return winner', (winner, hand) => {
@@ -45,5 +50,5 @@ function start() {
 };
 
 startButton.addEventListener('click', start);
-endButton.addEventListener('click', end);
+// endButton.addEventListener('click', end);
 

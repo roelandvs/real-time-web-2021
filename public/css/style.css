@@ -1,8 +1,8 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} */
 
 input {
     display: block;
@@ -10,4 +10,8 @@ input {
 
 input[id="name"] {
     margin-bottom: 40px;
+}
+
+img {
+    height: 200px;
 }
