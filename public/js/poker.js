@@ -3,6 +3,7 @@ const startButton = document.querySelector('#start-button');
 const endButton = document.querySelector('#end-button');
 const foldButton = document.createElement('button');
 const checkButton = document.createElement('button');
+const statusList = document.querySelector('#status-list')
 
 socket.emit('join room', name, roomId);
 
@@ -39,7 +40,7 @@ socket.on('serve cards', (cards, river) => {
     startButton.parentElement.removeChild(startButton);
 });
 
-socket.on('start round', () => {
+socket.on('active turn', () => {
     const optionContainer = document.querySelector('#options')
     
     foldButton.setAttribute('type', 'button');
@@ -52,6 +53,12 @@ socket.on('start round', () => {
 
 socket.on('return winner', (winner, hand) => {
     console.log(`${winner} won the game with a ${hand}!`)
+});
+
+socket.on('status update', (player, update) => {
+    const updateItem = document.createElement('li');
+    updateItem.innerText = `${player}: ${update}`;
+    statusList.appendChild(updateItem);
 });
 
 function start() {

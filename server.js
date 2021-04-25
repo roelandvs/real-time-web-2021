@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 420;
+const port = process.env.PORT || 3000;
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
             riverArray.push(card.code)
         });
 
-        io.to(socket.id).emit('start round');
+        io.to(socket.id).emit('active turn');
         // socket.deck = deck.deck_id;
         // socket.river = riverArray;
         addData(socket.room, 'none', 'deckId', deck.deck_id);
@@ -78,6 +78,16 @@ io.on('connection', (socket) => {
         socket.river = await getData(socket.room, 'riverCards', 'room');
         socket.deck = await getData(socket.room, 'deckId', 'room');
         socket.playerIds = await getData(socket.room, 'socketId');
+    })
+
+    socket.on('fold', async () => {
+        // io.to(socket.room).emit('status update', socket.name, 'folds');
+        const players = await getData(socket.room, 'niks', 'user');
+        const nextPlayer = players.find((player) => {
+            return player.hasHadTurn === false;
+        });
+
+        io.to(nextPlayer.socketId).emit('active turn');
     })
 
     socket.on('get winner', () => {
