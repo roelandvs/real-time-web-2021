@@ -22,7 +22,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:roomId/:name', (req, res) => {
-    res.render('staging', { room: req.params.roomId, name: req.params.name })
+    res.render('poker', { room: req.params.roomId, name: req.params.name, leader: false })
+});
+
+app.get('/:roomId/:name/leader', (req, res) => {
+    res.render('poker', { room: req.params.roomId, name: req.params.name, leader: true })
 });
 
 app.post('/', (req, res) => {
@@ -99,6 +103,7 @@ io.on('connection', (socket) => {
             })
             .then(winnerArray => {
                 const winningValue = winnerArray[1].winners[0].result;
+                console.log(winnerArray[0])
 
                 socket.playerIds.forEach(playerId => {
                     if (winnerArray[0].socketId === playerId) {

@@ -12,7 +12,7 @@ function createOrJoinRoom(name, res, roomId) {
         db.ref('rooms').child(createRoomId).child('players').push({
             username: name
         });
-        res.redirect(`/${createRoomId}/${name}`)
+        res.redirect(`/${createRoomId}/${name}/leader`)
     };
 
     
