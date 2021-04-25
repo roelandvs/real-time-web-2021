@@ -44,7 +44,10 @@ io.on('connection', (socket) => {
         const playerIds = await getData(socket.room, 'socketId');
         const deck = await useCardDeck('create');
         const river = await useCardDeck('draw', '3', deck.deck_id);
-        const riverArray = [];
+        let riverArray = [];
+        let arrayDing = [];
+        arrayDing.push('');
+        console.log(arrayDing)
 
         playerIds.forEach((player, i) => {
             setTimeout(async () => {
@@ -81,13 +84,20 @@ io.on('connection', (socket) => {
     })
 
     socket.on('fold', async () => {
-        // io.to(socket.room).emit('status update', socket.name, 'folds');
+        io.to(socket.room).emit('status update', socket.name, 'folds');
         const players = await getData(socket.room, 'niks', 'user');
         const nextPlayer = players.find((player) => {
             return player.hasHadTurn === false;
         });
-        io.to(nextPlayer.socketId).emit('active turn');
-        addData(socket.room, nextPlayer.username, 'hasHadTurn', true);
+
+        if (nextPlayer === undefined) {
+            addData(socket.room, socket.name, 'cards', '');
+            addData(socket.room, 'everyone', 'hasHadTurn', false);
+        } else {
+            io.to(nextPlayer.socketId).emit('active turn');
+            addData(socket.room, socket.name, 'cards', '');
+            addData(socket.room, nextPlayer.username, 'hasHadTurn', true);
+        };
     })
 
     socket.on('get winner', () => {

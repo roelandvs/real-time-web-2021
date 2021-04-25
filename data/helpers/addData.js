@@ -11,6 +11,18 @@ function addData(roomId, userName, keyName, value) {
                     [keyName]: value
                 })
         });
+    } else if (userName === 'everyone') {
+        userRef.child('players').get().then(snap => {
+            snap.forEach(snapshot => {
+                snapshot.ref
+                .update({
+                    [keyName]: value
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            })
+        });
     } else {
         userRef.child('players').get().then(snap => {
             snap.forEach(snapshot => {
