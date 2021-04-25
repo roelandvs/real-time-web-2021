@@ -46,9 +46,11 @@ io.on('connection', (socket) => {
         const river = await useCardDeck('draw', '5', deck.deck_id);
         const riverArray = [];
 
-        playerIds.forEach(async (player) => {
-            const draw = await useCardDeck('draw', '2', deck.deck_id);
-            io.to(`${player}`).emit('serve cards', draw, river);
+        playerIds.forEach((player, i) => {
+            setTimeout(async () => {
+                const draw = await useCardDeck('draw', '2', deck.deck_id);
+                io.to(`${player}`).emit('serve cards', draw, river);
+            }, i * 500)
         });
 
         river.cards.forEach(card => {
