@@ -9,13 +9,14 @@
 </head>
 
 <body>
-    <h1>Players</h1>
+    <h1>Poker</h1>
     <p><%= room %></p>
+    <h3>Players:</h3>
     <ul id="players">
     </ul>
 
     <% if (leader) { %>
-        <button id="start-button">Start</button>
+        <button type="button" id="start-button">Start</button>
     <% } %>
 
     <div>
@@ -34,6 +35,9 @@
     <!-- <% if (leader) { %>
         <button id="end-button">End</button>
     <% } %> -->
+    <div id="options">
+        
+    </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>

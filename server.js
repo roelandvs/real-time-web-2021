@@ -57,6 +57,7 @@ io.on('connection', (socket) => {
             riverArray.push(card.code)
         });
 
+        io.to(socket.id).emit('start round');
         // socket.deck = deck.deck_id;
         // socket.river = riverArray;
         addData(socket.room, 'none', 'deckId', deck.deck_id);
@@ -75,6 +76,7 @@ io.on('connection', (socket) => {
     socket.on('cards to database', async (cardOne, cardTwo) => {
         addData(socket.room, socket.name, 'cards', [cardOne, cardTwo]);
         socket.river = await getData(socket.room, 'riverCards', 'room');
+        socket.deck = await getData(socket.room, 'deckId', 'room');
         socket.playerIds = await getData(socket.room, 'socketId');
     })
 
