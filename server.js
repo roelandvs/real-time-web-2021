@@ -5,10 +5,10 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 const { createOrJoinRoom } = require('./data/helpers/createOrJoinRoom');
+const { getWinningCards } = require('./data/helpers/getWinningCards');
 const { formatTenCard } = require('./data/helpers/formatTenCard');
 const { useCardDeck } = require('./data/helpers/useCardDeck');
 const { checkRoom } = require('./data/helpers/checkRoom');
-const { getWinner } = require('./data/helpers/getWinner');
 const { getData } = require('./data/helpers/getData');
 const { addData } = require('./data/helpers/addData');
 
@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
             .then(urlCardString => {
                 const formattedRiver = formatTenCard(socket.river);
                 const urlRiverString = formattedRiver.toString();
-                return getWinner(urlRiverString, urlCardString);
+                return getWinningCards(urlRiverString, urlCardString);
             })
             .then(async winnerObject => {
                 const users = await getData(socket.room, 'niks', 'user');
