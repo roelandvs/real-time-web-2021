@@ -5,6 +5,7 @@ const foldButton = document.createElement('button');
 const checkButton = document.createElement('button');
 const statusList = document.querySelector('#status-list');
 const optionContainer = document.querySelector('#options');
+const riverCardsImg = document.querySelectorAll('.river-card');
 
 socket.emit('join room', name, roomId);
 
@@ -21,7 +22,6 @@ socket.on('add player', (playerNames) => {
 
 socket.on('serve cards', (cards, river) => {
     const userCardsImg = document.querySelectorAll('.user-card');
-    const riverCardsImg = document.querySelectorAll('.river-card');
 
     userCardsImg.forEach((card, i) => {
         card.setAttribute('src', `${cards.cards[i].image}`)
@@ -47,6 +47,7 @@ socket.on('active turn', () => {
     optionContainer.appendChild(foldButton);
     optionContainer.appendChild(checkButton);
     foldButton.addEventListener('click', fold);
+    checkButton.addEventListener('click', check);
 });
 
 socket.on('return winner', (winner, hand) => {
@@ -59,6 +60,11 @@ socket.on('status update', (player, update) => {
     statusList.appendChild(updateItem);
 });
 
+socket.on('flop', (flopNumber, flopCard) => {
+    console.log(flopCard)
+    riverCardsImg[2 + flopNumber].setAttribute('src', `${flopCard.cards[0].image}`)
+});
+
 function start() {
     socket.emit('start game', roomId);
 };
@@ -69,6 +75,7 @@ function end() {
 
 function check() {
     socket.emit('check');
+    optionContainer.innerHTML = '';
 };
 
 function fold() {
@@ -77,6 +84,5 @@ function fold() {
 };
 
 startButton.addEventListener('click', start);
-checkButton.addEventListener('click', check);
-// endButton.addEventListener('click', end);
+endButton.addEventListener('click', end);
 
