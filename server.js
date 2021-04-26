@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
         if (nextPlayer === undefined) {
             const flop = await useCardDeck('draw', '1', socket.deck);
             socket.round += 1;
-            socket.river.push(flop);
+            socket.river.push(flop.cards[0].code);
             io.to(socket.room).emit('flop', 1, flop);
             addData(socket.room, 'everyone', 'hasHadTurn', false);
             addData(socket.room, 'room', 'riverCards', socket.river);
@@ -116,10 +116,10 @@ io.on('connection', (socket) => {
         if (nextPlayer === undefined) {
             const flop = await useCardDeck('draw', '1', socket.deck);
             socket.round += 1;
-            socket.river.push(flop);
+            socket.river.push(flop.cards[0].code);
             io.to(socket.room).emit('flop', 1, flop);
             addData(socket.room, 'everyone', 'hasHadTurn', false);
-            addData(socket.room, 'room', 'riverCards', socket.river);
+            addData(socket.room, 'none', 'riverCards', socket.river);
         } else {
             io.to(nextPlayer.socketId).emit('active turn');
             addData(socket.room, nextPlayer.username, 'hasHadTurn', true);

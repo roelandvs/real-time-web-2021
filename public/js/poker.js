@@ -61,7 +61,6 @@ socket.on('status update', (player, update) => {
 });
 
 socket.on('flop', (flopNumber, flopCard) => {
-    console.log(flopCard)
     riverCardsImg[2 + flopNumber].setAttribute('src', `${flopCard.cards[0].image}`)
 });
 
@@ -84,5 +83,5 @@ function fold() {
 };
 
 startButton.addEventListener('click', start);
-endButton.addEventListener('click', end);
+// endButton.addEventListener('click', end);
 
