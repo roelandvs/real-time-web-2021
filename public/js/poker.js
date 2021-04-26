@@ -31,7 +31,7 @@ socket.on('serve cards', (cards, river) => {
         if (river.cards[i]) {
             card.setAttribute('src', `${river.cards[i].image}`)
         } else {
-            card.setAttribute('src', 'https://lh3.googleusercontent.com/proxy/t8xwIPdIq_8cduE0NuFc9Lo38C2yB72_Jz6ASGM9M_mc04agyRSdV3UqevIVQIv9UH7q9vuPCKJi08NL0IIZjdSgk0GIxhY')
+            card.setAttribute('src', 'https://i.pinimg.com/originals/6c/a0/16/6ca016115a894f69dea75cc80f95ad92.jpg')
         }
     });
 

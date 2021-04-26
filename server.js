@@ -84,19 +84,29 @@ io.on('connection', (socket) => {
 
     socket.on('fold', async () => {
         io.to(socket.room).emit('status update', socket.name, 'folds');
+        addData(socket.room, socket.name, 'hasFolded', true);
         const players = await getData(socket.room, 'niks', 'user');
         const nextPlayer = players.find((player) => {
-            return player.hasHadTurn === false;
+            return player.hasHadTurn === false && player.hasFolded === false;
+        });
+        const noFoldPlayers = players.find((player) => {
+            return player.hasFolded === false;
         });
 
         //if next player is undefined new round starts
         if (nextPlayer === undefined) {
-            const flop = await useCardDeck('draw', '1', socket.deck);
-            socket.round += 1;
-            socket.river.push(flop.cards[0].code);
-            io.to(socket.room).emit('flop', 1, flop);
-            addData(socket.room, 'everyone', 'hasHadTurn', false);
-            addData(socket.room, 'room', 'riverCards', socket.river);
+            if (socket.round < 3) {
+                const flop = await useCardDeck('draw', '1', socket.deck);
+                socket.river.push(flop.cards[0].code);
+                io.to(socket.room).emit('flop', socket.round, flop);
+                io.to(noFoldPlayers[0].socketId).emit('active turn');
+                socket.round += 1;
+                addData(socket.room, 'everyone', 'hasHadTurn', false);
+                addData(socket.room, noFoldPlayers[0].username, 'hasHadTurn', true);
+                addData(socket.room, 'room', 'riverCards', socket.river);
+            } else {
+                console.log('get winner');
+            }
         } else {
             io.to(nextPlayer.socketId).emit('active turn');
             addData(socket.room, nextPlayer.username, 'hasHadTurn', true);
@@ -109,17 +119,29 @@ io.on('connection', (socket) => {
         io.to(socket.room).emit('status update', socket.name, 'checks');
         const players = await getData(socket.room, 'niks', 'user');
         const nextPlayer = players.find((player) => {
-            return player.hasHadTurn === false;
+            return player.hasHadTurn === false && player.hasFolded === false;
+        });
+        const noFoldPlayers = players.filter((player) => {
+            if (player.hasFolded === false) {
+                return player;
+            };
         });
 
         //if next player is undefined new round starts
         if (nextPlayer === undefined) {
-            const flop = await useCardDeck('draw', '1', socket.deck);
-            socket.round += 1;
-            socket.river.push(flop.cards[0].code);
-            io.to(socket.room).emit('flop', 1, flop);
-            addData(socket.room, 'everyone', 'hasHadTurn', false);
-            addData(socket.room, 'none', 'riverCards', socket.river);
+            if (socket.round < 3) {
+                const flop = await useCardDeck('draw', '1', socket.deck);
+                socket.river.push(flop.cards[0].code);
+                io.to(socket.room).emit('flop', socket.round, flop);
+                io.to(noFoldPlayers[0].socketId).emit('active turn');
+                socket.round += 1;
+                console.log(noFoldPlayers)
+                addData(socket.room, 'everyone', 'hasHadTurn', false);
+                addData(socket.room, noFoldPlayers[0].username, 'hasHadTurn', true);
+                addData(socket.room, 'none', 'riverCards', socket.river);
+            } else {
+                console.log('get winner');
+            }
         } else {
             io.to(nextPlayer.socketId).emit('active turn');
             addData(socket.room, nextPlayer.username, 'hasHadTurn', true);

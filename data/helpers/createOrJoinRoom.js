@@ -6,7 +6,8 @@ function createOrJoinRoom(name, res, roomId) {
         db.ref('rooms').child(roomId).child('players').push({
             username: name,
             leader: false,
-            hasHadTurn: false
+            hasHadTurn: false,
+            hasFolded: false
         });
         res.redirect(`/${roomId}/${name}`)
     } else {
@@ -14,7 +15,8 @@ function createOrJoinRoom(name, res, roomId) {
         db.ref('rooms').child(createRoomId).child('players').push({
             username: name,
             leader: true,
-            hasHadTurn: true
+            hasHadTurn: true,
+            hasFolded: false
         });
         res.redirect(`/${createRoomId}/${name}/leader`)
     };
