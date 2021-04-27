@@ -3,7 +3,7 @@ const startButton = document.querySelector('#start-button');
 const foldButton = document.createElement('button');
 const checkButton = document.createElement('button');
 const statusList = document.querySelector('#status-list');
-const optionContainer = document.querySelector('#options');
+const controlContainer = document.querySelector('.controls');
 const riverCardsImg = document.querySelectorAll('.river-card');
 const userCardsImg = document.querySelectorAll('.user-card');
 
@@ -58,8 +58,8 @@ socket.on('active turn', () => {
     checkButton.setAttribute('type', 'button');
     foldButton.innerText = 'Fold';
     checkButton.innerText = 'Check';
-    optionContainer.appendChild(foldButton);
-    optionContainer.appendChild(checkButton);
+    controlContainer.appendChild(foldButton);
+    controlContainer.appendChild(checkButton);
     foldButton.addEventListener('click', fold);
     checkButton.addEventListener('click', check);
 });
@@ -88,14 +88,14 @@ function end() {
 
 function check() {
     socket.emit('check');
-    optionContainer.innerHTML = '';
+    controlContainer.innerHTML = '';
 };
 
 function fold() {
     socket.emit('fold');
-    optionContainer.innerHTML = '';
+    controlContainer.innerHTML = '';
 };
 
-if (leader === true) {
+if (leader === 'true') {
     startButton.addEventListener('click', start);
 };
