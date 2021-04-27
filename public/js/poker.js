@@ -33,7 +33,6 @@ socket.on('add player', (playerNames) => {
 });
 
 socket.on('serve cards', (cards, river) => {
-
     userCardsImg.forEach((card, i) => {
         card.setAttribute('src', `${cards.cards[i].image}`)
     });
@@ -47,10 +46,6 @@ socket.on('serve cards', (cards, river) => {
     });
 
     socket.emit('cards to database', cards.cards[0].code, cards.cards[1].code);
-    
-    if (leader === true) {
-        startButton.parentElement.removeChild(startButton);
-    };
 });
 
 socket.on('active turn', () => {
@@ -70,7 +65,14 @@ socket.on('return winner', (winner, hand) => {
 
 socket.on('status update', (player, update) => {
     const updateItem = document.createElement('li');
-    updateItem.innerText = `${player}: ${update}`;
+    const nameSpan = document.createElement('span');
+    const messageSpan = document.createElement('span');
+
+    nameSpan.innerText = `${player}: `;
+    messageSpan.innerText = update;
+
+    updateItem.appendChild(nameSpan);
+    updateItem.appendChild(messageSpan);
     statusList.appendChild(updateItem);
 });
 
@@ -80,6 +82,7 @@ socket.on('flop', (flopNumber, flopCard) => {
 
 function start() {
     socket.emit('start game', roomId);
+    startButton.parentElement.removeChild(startButton);
 };
 
 function end() {

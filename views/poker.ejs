@@ -34,29 +34,9 @@
             </div>
         </section>
 
-        <div class="controls">
-            <% if (leader) { %>
-                <button type="button" id="start-button">Start</button>
-            <% } %>
-        </div>
-
         <section class="status">
             <h2>Status</h2>
             <ul id="status-list">
-                <!-- <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li>
-                <li>X</li> -->
             </ul>
         </section>
 
@@ -65,6 +45,12 @@
             <ul id="players">
             </ul>
         </section>
+
+        <div class="controls">
+            <% if (leader) { %>
+                <button type="button" id="start-button">Start</button>
+            <% } %>
+        </div>
     </main>
 
     <script src="/socket.io/socket.io.js"></script>
