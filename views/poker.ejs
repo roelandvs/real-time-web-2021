@@ -9,35 +9,45 @@
 </head>
 
 <body>
-    <h1>Poker</h1>
-    <p><%= room %></p>
-    <h3>Players:</h3>
-    <ul id="players">
-    </ul>
+    <main id="poker">
+        <header>
+            <h1>Poker</h1>
+            <p><%= room %></p>
+        </header>
 
-    <h3>Update bar:</h3>
-    <ul id="status-list"></ul>
+        <section class="table">
+            <div>
+                <img class="user-card" src="" alt="">
+                <img class="user-card" src="" alt="">
+            </div>
+            
+            <div>
+                <img class="river-card" src="" alt="">
+                <img class="river-card" src="" alt="">
+                <img class="river-card" src="" alt="">
+                <img class="river-card" src="" alt="">
+                <img class="river-card" src="" alt="">
+            </div>
+        </section>
 
-    <% if (leader) { %>
-        <button type="button" id="start-button">Start</button>
-    <% } %>
+        <div class="controls">
+            <% if (leader) { %>
+                <button type="button" id="start-button">Start</button>
+            <% } %>
+        </div>
 
-    <div>
-        <img class="user-card" src="" alt="">
-        <img class="user-card" src="" alt="">
-    </div>
+        <section class="status">
+            <h3>Update bar:</h3>
+            <ul id="status-list"></ul>
+        </section>
 
-    <div>
-        <img class="river-card" src="" alt="">
-        <img class="river-card" src="" alt="">
-        <img class="river-card" src="" alt="">
-        <img class="river-card" src="" alt="">
-        <img class="river-card" src="" alt="">
-    </div>
+        <section class="players">
+            <h3>Players:</h3>
+            <ul id="players">
+            </ul>
+        </section>
+    </main>
 
-    <div id="options">
-    </div>
-    
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const roomId = '<%= room %>';

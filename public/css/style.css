@@ -12,10 +12,6 @@ body {
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     height: 100vh;
     width: 100vw;
 }
@@ -34,9 +30,56 @@ h1 {
 }
 
 /* Poker page */
+#poker {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-areas: 
+        ". header ."
+        "status table players"
+        ". controls .";
+}
+
+#poker header {
+    grid-area: header;
+}
+
+.table {
+    grid-area: table;
+}
+
+.status {
+    grid-area: status;
+}
+
+.controls {
+    grid-area: controls;
+}
+
+.players {
+    grid-area: players;
+}
+
+
+
+
+#poker h1 {
+    grid-area: main;
+}
+
+
+
+
 
 
 /* Room page */
+#room {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 #room h1 {
     margin-top: -50px;
 }
