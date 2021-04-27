@@ -81,7 +81,6 @@ function fold() {
     optionContainer.innerHTML = '';
 };
 
-//true is string because 
 if (leader === true) {
     startButton.addEventListener('click', start);
 };
