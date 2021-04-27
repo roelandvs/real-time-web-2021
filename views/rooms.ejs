@@ -5,23 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <title>Poker Appie</title>
 </head>
 
 <body>
-    <h1>Poker</h1>
-    <section>
-        <form action="/" method="POST">
-            <label for="name">Naam</label>
-            <input type="text" name="name" id="name" required>
-            
-            <button type="submit" class="submit-button" value="create" name="create">Create Room</button>
-            <p>or</p>
-            <!-- <label for="roomID">Room ID</label> -->
-            <input type="text" placeholder="Room ID" name="roomID" id="roomID">
-            <button type="submit" class="submit-button" id="roomID" name="join">Join Room</button>
-        </form>
-    </section>
+    <main>
+        <h1>Poker</h1>
+        <section id="form-container">
+            <form action="/" method="POST">
+                <input type="text" placeholder="Naam" name="name" id="name" required>
+                
+                <button type="submit" class="submit-button" value="create" name="create">Create Room</button>
+                <p>or</p>
+                <!-- <label for="roomID">Room ID</label> -->
+                <input type="text" placeholder="Room ID" name="roomID" id="roomID">
+                <button type="submit" class="submit-button" id="roomID" name="join">Join Room</button>
+            </form>
+        </section>
+    </main>
 </body>
 
 </html>
