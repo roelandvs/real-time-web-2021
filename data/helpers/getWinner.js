@@ -9,9 +9,15 @@ function getWinner(roomId, riverCards) {
                 //Poker and Carddeck API use different notation for card '10' (0 vs 10)
                 //So I need to add '1' to front to make it the same
                 const formattedCards = formatTenCard(cur);
-                const cardString = formattedCards.toString();
-                const ApiUrlNotation = `&pc[]=${cardString}`;
-                return acc.concat(ApiUrlNotation);
+
+                //if a player folded the cards return undefined
+                if (formattedCards !== undefined) {
+                    const cardString = formattedCards.toString();
+                    const ApiUrlNotation = `&pc[]=${cardString}`;
+                    return acc.concat(ApiUrlNotation);
+                } else {
+                    return acc;
+                };
             }, '')
         })
         .then(urlCardString => {

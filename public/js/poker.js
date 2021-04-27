@@ -35,7 +35,10 @@ socket.on('serve cards', (cards, river) => {
     });
 
     socket.emit('cards to database', cards.cards[0].code, cards.cards[1].code);
-    startButton.parentElement.removeChild(startButton);
+    
+    if (leader === true) {
+        startButton.parentElement.removeChild(startButton);
+    };
 });
 
 socket.on('active turn', () => {

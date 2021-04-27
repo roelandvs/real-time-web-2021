@@ -3,12 +3,12 @@ function formatTenCard(cards) {
         if (cur.startsWith('0')) {
             const newTenCard = '1' + cur;
             acc.push(newTenCard);
+            return acc;
         } else if (cur === '') {
         } else {
             acc.push(cur);
+            return acc;
         };
-
-        return acc;
     }, []);
 };
 

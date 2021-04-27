@@ -80,7 +80,6 @@ io.on('connection', (socket) => {
 
     socket.on('fold', async () => {
         io.to(socket.room).emit('status update', socket.name, 'folds');
-        getWinner();
         addData(socket.room, socket.name, 'hasFolded', true);
         const players = await getData(socket.room, 'niks', 'user');
         const nextPlayer = players.find((player) => {
@@ -107,7 +106,6 @@ io.on('connection', (socket) => {
                 getWinner(socket.room, socket.river)
                     .then(winnerArray => {
                         const winningValue = winnerArray[1].winners[0].result;
-                        console.log(winnerArray[0])
         
                         socket.playerIds.forEach(playerId => {
                             if (winnerArray[0].socketId === playerId) {
@@ -123,7 +121,7 @@ io.on('connection', (socket) => {
             addData(socket.room, nextPlayer.username, 'hasHadTurn', true);
         };
 
-        addData(socket.room, socket.name, 'cards', '');
+        addData(socket.room, socket.name, 'cards', ['', '']);
     })
 
     socket.on('check', async () => {
@@ -147,7 +145,6 @@ io.on('connection', (socket) => {
                 io.to(socket.room).emit('flop', socket.round, flop);
                 io.to(noFoldPlayers[0].socketId).emit('active turn');
                 socket.round += 1;
-                console.log(noFoldPlayers)
                 addData(socket.room, 'everyone', 'hasHadTurn', false);
                 addData(socket.room, noFoldPlayers[0].username, 'hasHadTurn', true);
                 addData(socket.room, 'none', 'riverCards', socket.river);
@@ -156,7 +153,6 @@ io.on('connection', (socket) => {
                 getWinner(socket.room, socket.river)
                     .then(winnerArray => {
                         const winningValue = winnerArray[1].winners[0].result;
-                        console.log(winnerArray[0])
         
                         socket.playerIds.forEach(playerId => {
                             if (winnerArray[0].socketId === playerId) {
