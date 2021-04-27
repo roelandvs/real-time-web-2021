@@ -3,6 +3,7 @@ const startButton = document.querySelector('#start-button');
 const foldButton = document.createElement('button');
 const checkButton = document.createElement('button');
 const statusList = document.querySelector('#status-list');
+const roomIdString = document.querySelector('h1 + p');
 const controlContainer = document.querySelector('.controls');
 const riverCardsImg = document.querySelectorAll('.river-card');
 const userCardsImg = document.querySelectorAll('.user-card');
@@ -99,6 +100,12 @@ function fold() {
     controlContainer.innerHTML = '';
 };
 
+function copyRoomId() {
+    navigator.clipboard.writeText(roomId)
+};
+
 if (leader === 'true') {
     startButton.addEventListener('click', start);
 };
+
+roomIdString.addEventListener('click', copyRoomId);

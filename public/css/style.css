@@ -44,6 +44,12 @@ h1 + p {
     background: #787878;
     width: fit-content;
     padding: 8px 20px;
+    cursor: pointer;
+}
+
+h1 + p:hover {
+    background: #dddddd;
+    color: #101010;
 }
 
 /* Poker page */
@@ -183,6 +189,12 @@ h1 + p {
     font-size: 1.1em;
     font-weight: 600;
     text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.5s all;
+}
+
+.controls button:hover {
+    background-color: #F00000;
 }
 
 .table, 
@@ -226,6 +238,7 @@ h1 + p {
     color: #FFF;
     height: 40px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 #room p {
