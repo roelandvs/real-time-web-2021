@@ -5,9 +5,8 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 const { createOrJoinRoom } = require('./data/helpers/createOrJoinRoom');
-const { getWinningCards } = require('./data/helpers/getWinningCards');
-const { formatTenCard } = require('./data/helpers/formatTenCard');
 const { useCardDeck } = require('./data/helpers/useCardDeck');
+const { getWinner } = require('./data/helpers/getWinner');
 const { checkRoom } = require('./data/helpers/checkRoom');
 const { getData } = require('./data/helpers/getData');
 const { addData } = require('./data/helpers/addData');
@@ -58,11 +57,8 @@ io.on('connection', (socket) => {
         });
 
         io.to(socket.id).emit('active turn');
-        // socket.deck = deck.deck_id;
-        // socket.river = riverArray;
         addData(socket.room, 'none', 'deckId', deck.deck_id);
         addData(socket.room, 'none', 'riverCards', riverArray);
-        // addData(socket.room, 'none', 'round', 1);
     });
 
     socket.on('join room', async (name, room) => {
@@ -84,6 +80,7 @@ io.on('connection', (socket) => {
 
     socket.on('fold', async () => {
         io.to(socket.room).emit('status update', socket.name, 'folds');
+        getWinner();
         addData(socket.room, socket.name, 'hasFolded', true);
         const players = await getData(socket.room, 'niks', 'user');
         const nextPlayer = players.find((player) => {
@@ -93,8 +90,9 @@ io.on('connection', (socket) => {
             return player.hasFolded === false;
         });
 
-        //if next player is undefined new round starts
+        //if next player is undefined new round starts or ends game
         if (nextPlayer === undefined) {
+            //new round starts
             if (socket.round < 3) {
                 const flop = await useCardDeck('draw', '1', socket.deck);
                 socket.river.push(flop.cards[0].code);
@@ -105,7 +103,20 @@ io.on('connection', (socket) => {
                 addData(socket.room, noFoldPlayers[0].username, 'hasHadTurn', true);
                 addData(socket.room, 'room', 'riverCards', socket.river);
             } else {
-                console.log('get winner');
+                //game ends
+                getWinner(socket.room, socket.river)
+                    .then(winnerArray => {
+                        const winningValue = winnerArray[1].winners[0].result;
+                        console.log(winnerArray[0])
+        
+                        socket.playerIds.forEach(playerId => {
+                            if (winnerArray[0].socketId === playerId) {
+                                io.to(`${playerId}`).emit('return winner', 'you', winningValue);
+                            } else {
+                                io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
+                            }
+                        })
+                    })
             }
         } else {
             io.to(nextPlayer.socketId).emit('active turn');
@@ -127,8 +138,9 @@ io.on('connection', (socket) => {
             };
         });
 
-        //if next player is undefined new round starts
+        //if next player is undefined new round starts or ends game
         if (nextPlayer === undefined) {
+            //new round starts
             if (socket.round < 3) {
                 const flop = await useCardDeck('draw', '1', socket.deck);
                 socket.river.push(flop.cards[0].code);
@@ -140,52 +152,26 @@ io.on('connection', (socket) => {
                 addData(socket.room, noFoldPlayers[0].username, 'hasHadTurn', true);
                 addData(socket.room, 'none', 'riverCards', socket.river);
             } else {
-                console.log('get winner');
+                //game ends
+                getWinner(socket.room, socket.river)
+                    .then(winnerArray => {
+                        const winningValue = winnerArray[1].winners[0].result;
+                        console.log(winnerArray[0])
+        
+                        socket.playerIds.forEach(playerId => {
+                            if (winnerArray[0].socketId === playerId) {
+                                io.to(`${playerId}`).emit('return winner', 'you', winningValue);
+                            } else {
+                                io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
+                            }
+                        })
+                    })
             }
         } else {
             io.to(nextPlayer.socketId).emit('active turn');
             addData(socket.room, nextPlayer.username, 'hasHadTurn', true);
         };
     });
-
-    socket.on('get winner', () => {
-        getData(socket.room, 'cards')
-            .then(playerCards => {
-                return playerCards.reduce((acc, cur) => {
-                    //Poker and Carddeck API use different notation for card '10' (0 vs 10)
-                    //So I need to add '1' to front to make it the same
-                    const formattedCards = formatTenCard(cur);
-                    const cardString = formattedCards.toString();
-                    const ApiUrlNotation = `&pc[]=${cardString}`;
-                    return acc.concat(ApiUrlNotation);
-                }, '')
-            })
-            .then(urlCardString => {
-                const formattedRiver = formatTenCard(socket.river);
-                const urlRiverString = formattedRiver.toString();
-                return getWinningCards(urlRiverString, urlCardString);
-            })
-            .then(async winnerObject => {
-                const users = await getData(socket.room, 'niks', 'user');
-                const winner = users.find((user) => {
-                    userCardString = user.cards.toString();
-                    return userCardString === winnerObject.winners[0].cards;
-                });
-                return [winner, winnerObject];
-            })
-            .then(winnerArray => {
-                const winningValue = winnerArray[1].winners[0].result;
-                console.log(winnerArray[0])
-
-                socket.playerIds.forEach(playerId => {
-                    if (winnerArray[0].socketId === playerId) {
-                        io.to(`${playerId}`).emit('return winner', 'you', winningValue);
-                    } else {
-                        io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
-                    }
-                })
-            })
-    })
 
     socket.on('disconnect', () => {
         console.log('user disconnected')
