@@ -1,6 +1,5 @@
 const socket = io();
 const startButton = document.querySelector('#start-button');
-const endButton = document.querySelector('#end-button');
 const foldButton = document.createElement('button');
 const checkButton = document.createElement('button');
 const statusList = document.querySelector('#status-list');
@@ -82,6 +81,7 @@ function fold() {
     optionContainer.innerHTML = '';
 };
 
-startButton.addEventListener('click', start);
-// endButton.addEventListener('click', end);
-
+//true is string because 
+if (leader === true) {
+    startButton.addEventListener('click', start);
+};

@@ -35,17 +35,14 @@
         <img class="river-card" src="" alt="">
     </div>
 
-    <!-- <% if (leader) { %>
-        <button id="end-button">End</button>
-    <% } %> -->
     <div id="options">
-
     </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const roomId = '<%= room %>'
-        const name = '<%= name %>'
+        const roomId = '<%= room %>';
+        const name = '<%= name %>';
+        const leader = <%= leader %>;
     </script>
     <script src="/js/poker.js"></script>
 </body>
