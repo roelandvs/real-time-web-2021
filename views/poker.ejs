@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <title>Poker Appie</title>
 </head>
 
@@ -17,16 +19,18 @@
 
         <section class="table">
             <div>
-                <img class="user-card" src="" alt="">
-                <img class="user-card" src="" alt="">
-            </div>
-            
-            <div>
-                <img class="river-card" src="" alt="">
-                <img class="river-card" src="" alt="">
-                <img class="river-card" src="" alt="">
-                <img class="river-card" src="" alt="">
-                <img class="river-card" src="" alt="">
+                <div class="river">
+                    <img class="river-card" src="" alt="">
+                    <img class="river-card" src="" alt="">
+                    <img class="river-card" src="" alt="">
+                    <img class="river-card" src="" alt="">
+                    <img class="river-card" src="" alt="">
+                </div>
+
+                <div class="player-cards">
+                    <img class="user-card" src="" alt="">
+                    <img class="user-card" src="" alt="">
+                </div>
             </div>
         </section>
 
@@ -37,12 +41,12 @@
         </div>
 
         <section class="status">
-            <h3>Update bar:</h3>
+            <h3>Status</h3>
             <ul id="status-list"></ul>
         </section>
 
         <section class="players">
-            <h3>Players:</h3>
+            <h3>Players</h3>
             <ul id="players">
             </ul>
         </section>

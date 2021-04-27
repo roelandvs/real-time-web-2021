@@ -5,6 +5,19 @@ const checkButton = document.createElement('button');
 const statusList = document.querySelector('#status-list');
 const optionContainer = document.querySelector('#options');
 const riverCardsImg = document.querySelectorAll('.river-card');
+const userCardsImg = document.querySelectorAll('.user-card');
+
+function addCardBackground() {
+    riverCardsImg.forEach(card => {
+        card.setAttribute('src', 'https://i.pinimg.com/originals/6c/a0/16/6ca016115a894f69dea75cc80f95ad92.jpg');
+    });
+
+    userCardsImg.forEach(card => {
+        card.setAttribute('src', 'https://i.pinimg.com/originals/6c/a0/16/6ca016115a894f69dea75cc80f95ad92.jpg');
+    });
+};
+
+addCardBackground();
 
 socket.emit('join room', name, roomId);
 
@@ -20,7 +33,6 @@ socket.on('add player', (playerNames) => {
 });
 
 socket.on('serve cards', (cards, river) => {
-    const userCardsImg = document.querySelectorAll('.user-card');
 
     userCardsImg.forEach((card, i) => {
         card.setAttribute('src', `${cards.cards[i].image}`)
@@ -30,7 +42,7 @@ socket.on('serve cards', (cards, river) => {
         if (river.cards[i]) {
             card.setAttribute('src', `${river.cards[i].image}`)
         } else {
-            card.setAttribute('src', 'https://i.pinimg.com/originals/6c/a0/16/6ca016115a894f69dea75cc80f95ad92.jpg')
+            
         }
     });
 
