@@ -85,8 +85,10 @@ io.on('connection', (socket) => {
         const nextPlayer = players.find((player) => {
             return player.hasHadTurn === false && player.hasFolded === false;
         });
-        const noFoldPlayers = players.find((player) => {
-            return player.hasFolded === false;
+        const noFoldPlayers = players.filter((player) => {
+            if (player.hasFolded === false) {
+                return player;
+            };
         });
 
         //if next player is undefined new round starts or ends game
@@ -105,15 +107,16 @@ io.on('connection', (socket) => {
                 //game ends
                 getWinner(socket.room, socket.river)
                     .then(winnerArray => {
-                        const winningValue = winnerArray[1].winners[0].result;
+                        // const winningValue = winnerArray[1].winners[0].result;
+                        io.to(socket.room).emit('status update', winnerArray[0].username, 'wins!');
         
-                        socket.playerIds.forEach(playerId => {
-                            if (winnerArray[0].socketId === playerId) {
-                                io.to(`${playerId}`).emit('return winner', 'you', winningValue);
-                            } else {
-                                io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
-                            }
-                        })
+                        // socket.playerIds.forEach(playerId => {
+                        //     if (winnerArray[0].socketId === playerId) {
+                        //         io.to(`${playerId}`).emit('return winner', 'you', winningValue);
+                        //     } else {
+                        //         io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
+                        //     }
+                        // })
                     })
             }
         } else {
@@ -152,15 +155,16 @@ io.on('connection', (socket) => {
                 //game ends
                 getWinner(socket.room, socket.river)
                     .then(winnerArray => {
-                        const winningValue = winnerArray[1].winners[0].result;
+                        // const winningValue = winnerArray[1].winners[0].result;
+                        io.to(socket.room).emit('status update', winnerArray[0].username, 'wins!');
         
-                        socket.playerIds.forEach(playerId => {
-                            if (winnerArray[0].socketId === playerId) {
-                                io.to(`${playerId}`).emit('return winner', 'you', winningValue);
-                            } else {
-                                io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
-                            }
-                        })
+                        // socket.playerIds.forEach(playerId => {
+                        //     if (winnerArray[0].socketId === playerId) {
+                        //         io.to(`${playerId}`).emit('return winner', 'you', winningValue);
+                        //     } else {
+                        //         io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
+                        //     }
+                        // })
                     })
             }
         } else {
