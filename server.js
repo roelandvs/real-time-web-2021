@@ -56,6 +56,7 @@ io.on('connection', (socket) => {
             riverArray.push(card.code)
         });
 
+        io.to(socket.room).emit('status update', socket.name, 'started game');
         io.to(socket.id).emit('active turn');
         addData(socket.room, 'none', 'deckId', deck.deck_id);
         addData(socket.room, 'none', 'riverCards', riverArray);
