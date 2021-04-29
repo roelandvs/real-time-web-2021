@@ -7,6 +7,7 @@ const roomIdString = document.querySelector('h1 + p');
 const controlContainer = document.querySelector('.controls');
 const riverCardsImg = document.querySelectorAll('.river-card');
 const userCardsImg = document.querySelectorAll('.user-card');
+const waitMessage = document.querySelector('.controls p');
 
 function addCardBackground() {
     riverCardsImg.forEach(card => {
@@ -41,10 +42,12 @@ socket.on('serve cards', (cards, river) => {
     riverCardsImg.forEach((card, i) => {
         if (river.cards[i]) {
             card.setAttribute('src', `${river.cards[i].image}`)
-        } else {
-            
-        }
+        };
     });
+
+    if (leader === 'false') {
+        waitMessage.parentElement.removeChild(waitMessage);
+    };
 
     socket.emit('cards to database', cards.cards[0].code, cards.cards[1].code);
 });
@@ -69,10 +72,15 @@ socket.on('status update', (player, update) => {
     const nameSpan = document.createElement('span');
     const messageSpan = document.createElement('span');
 
-    nameSpan.innerText = `${player}: `;
-    messageSpan.innerText = update;
+    if (player === roomId) {
+        updateItem.classList.add('room-message')
+        messageSpan.innerText = update;
+    } else {
+        nameSpan.innerText = `${player}: `;
+        messageSpan.innerText = update;
+        updateItem.appendChild(nameSpan);
+    };
 
-    updateItem.appendChild(nameSpan);
     updateItem.appendChild(messageSpan);
     statusList.appendChild(updateItem);
 });

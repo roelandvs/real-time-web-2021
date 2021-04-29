@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
             riverArray.push(card.code)
         });
 
-        io.to(socket.room).emit('status update', socket.name, 'started game');
+        io.to(socket.room).emit('status update', socket.room, 'game started');
         io.to(socket.id).emit('active turn');
         addData(socket.room, 'none', 'deckId', deck.deck_id);
         addData(socket.room, 'none', 'riverCards', riverArray);
@@ -96,6 +96,7 @@ io.on('connection', (socket) => {
         if (nextPlayer === undefined) {
             //new round starts
             if (socket.round < 3) {
+                io.to(socket.room).emit('status update', socket.room, `round ${socket.round}`);
                 const flop = await useCardDeck('draw', '1', socket.deck);
                 socket.river.push(flop.cards[0].code);
                 io.to(socket.room).emit('flop', socket.round, flop);
@@ -108,16 +109,7 @@ io.on('connection', (socket) => {
                 //game ends
                 getWinner(socket.room, socket.river)
                     .then(winnerArray => {
-                        // const winningValue = winnerArray[1].winners[0].result;
                         io.to(socket.room).emit('status update', winnerArray[0].username, 'wins!');
-        
-                        // socket.playerIds.forEach(playerId => {
-                        //     if (winnerArray[0].socketId === playerId) {
-                        //         io.to(`${playerId}`).emit('return winner', 'you', winningValue);
-                        //     } else {
-                        //         io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
-                        //     }
-                        // })
                     })
             }
         } else {
@@ -144,6 +136,7 @@ io.on('connection', (socket) => {
         if (nextPlayer === undefined) {
             //new round starts
             if (socket.round < 3) {
+                io.to(socket.room).emit('status update', socket.room, `round ${socket.round + 1}`);
                 const flop = await useCardDeck('draw', '1', socket.deck);
                 socket.river.push(flop.cards[0].code);
                 io.to(socket.room).emit('flop', socket.round, flop);
@@ -156,16 +149,7 @@ io.on('connection', (socket) => {
                 //game ends
                 getWinner(socket.room, socket.river)
                     .then(winnerArray => {
-                        // const winningValue = winnerArray[1].winners[0].result;
                         io.to(socket.room).emit('status update', winnerArray[0].username, 'wins!');
-        
-                        // socket.playerIds.forEach(playerId => {
-                        //     if (winnerArray[0].socketId === playerId) {
-                        //         io.to(`${playerId}`).emit('return winner', 'you', winningValue);
-                        //     } else {
-                        //         io.to(`${playerId}`).emit('return winner', winnerArray[0].username, winningValue);
-                        //     }
-                        // })
                     })
             }
         } else {

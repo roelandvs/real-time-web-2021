@@ -56,7 +56,7 @@ h1 + p:hover {
 #poker {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2.5fr 1fr;
     grid-template-areas: 
         ". header ."
         "status table players"
@@ -117,10 +117,11 @@ h1 + p:hover {
 .status ul {
     height: 90%;
     /* max-height: 90%; */
-    width: 50%;
+    width: 60%;
     padding: 20px;
     background-color: #383838;
     overflow: hidden;
+    font-size: 0.9em;
     /* -ms-overflow-style: none;
     scrollbar-width: none; */
 }
@@ -129,6 +130,11 @@ h1 + p:hover {
     background-color: #646464;
     border: 1px solid #787878;
     border-radius: 10px;
+}
+
+.status li.room-message {
+    background-color: transparent;
+    border: 0;
 }
 
 .status ul::-webkit-scrollbar {
@@ -204,11 +210,6 @@ h1 + p:hover {
 #poker header {
     text-align: center;
 }
-
-
-
-
-
 
 /* Room page */
 #room {
