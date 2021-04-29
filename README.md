@@ -138,10 +138,19 @@ Vervolgens kun je het `deck_id` gebruiken in een nieuw request om handelingen ui
 
 <br/>
 
-# Graph
-![Screenshot 2021-04-12 at 16 08 28](https://user-images.githubusercontent.com/59770136/114408615-e2190180-9ba9-11eb-8891-db87c52e9fe2.png)
+# Data Life Cycle
+![Screenshot 2021-04-29 at 13 20 08](https://user-images.githubusercontent.com/59770136/116543020-a2fae800-a8ed-11eb-8a7c-573587e79fbd.png)
+
 
 <br/>
+
+# Real Time Events
+`start game`: Starts spel
+`join room`: Joins speler in de room
+`flop`: Toont nieuwe kaart van de river
+`fold`: Laat speler folden
+`check`: Laat speler checken
+`status update`: Toont wat er in het spel gebeurt
 
 ## Installation guide
 Create a directory using your terminal:

@@ -116,7 +116,7 @@ h1 + p:hover {
 
 .status ul {
     height: 90%;
-    /* max-height: 90%; */
+    max-height: 500px;
     width: 60%;
     padding: 20px;
     background-color: #383838;
@@ -197,6 +197,10 @@ h1 + p:hover {
     text-transform: uppercase;
     cursor: pointer;
     transition: 0.5s all;
+}
+
+.controls p {
+    margin-top: 50px;
 }
 
 .controls button:hover {
