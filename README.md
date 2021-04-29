@@ -1,10 +1,10 @@
 # Real-Time Poker App
-Ik wil een realtime poker spel maken. Je kunt dus in een room komen met (willekeurige?) tegenstanders. Deze rooms zullen een beperkt aantal(8) personen binnen laten zodat het niet te druk zal worden. Verder moet er natuurlijk voldaan worden aan alle regels van poker. Het moet in de basis dus mogelijk zijn om te:
+<img width="2560" alt="Screenshot 2021-04-29 at 12 32 41" src="https://user-images.githubusercontent.com/59770136/116538138-6a581000-a8e7-11eb-9c75-395cd969c3bb.png">
+
+Ik wil een realtime poker spel maken. Je kunt een room aanmaken, en vervolgens met vrienden een potje poker spelen. Verder moet er natuurlijk voldaan worden aan alle regels van poker. Het doel is om te kunnen:
 - Folden
 - Callen
 - Raisen
-
-Ook zal er rekening gehouden worden met de small en big blind, en dat de beurt roteert. De winnaar zal aan het einde de pot winnen en dit geld wordt aan zijn rekening toegevoegd. Dit zal dus ook in een database moeten worden opgeslagen.
 
 [Link naar site](https://realtime-poker.herokuapp.com/)  
 <br/>
@@ -116,25 +116,25 @@ Vervolgens kun je het `deck_id` gebruiken in een nieuw request om handelingen ui
 
 # MoSCoW
 ## Must
-- Naam tonen
-- Poker regels toepassen
-- Keuze maken tussen (fold, check en raise)
-- Rooms maken
+- [x] Naam van players tonen
+- [x] Winnaar bekendmaken
+- [x] Meerdere rondes (per ronde een kaart er bij)
+- [x] Zelf keuze kunnen maken over wat je wil doen
+- [x] Rooms maken
 
 ## Should
-- Login
-- Geld bijhouden op account
-- Geld 'bijkopen' als je niks meer hebt
+- [ ] Login
+- [ ] Met inzet werken
+- [x] Je vrienden uitnodigen voor jouw room
 
 ## Could
-- Je vrienden uitnodigen voor een room
-- Animaties toepassen op kaarten
-- Eigen avatar maken, die vervolgens aan tafel zit
-- Op mobiel werken
+- [ ] Geld bij houden op account
+- [ ] Animaties toepassen op kaarten
+- [ ] Eigen avatar maken, die vervolgens aan tafel zit
+- [ ] Op mobiel werken
 
 ## Want to have, but not this time
-- Echt geld kunnen storten
-- Dingen
+- [ ] Geld bij storten als je blut bent
 
 <br/>
 
